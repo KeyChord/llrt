@@ -1,0 +1,24 @@
+[package]
+name = "llrt_readline"
+description = "LLRT Module readline"
+version = "0.8.1-beta"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/awslabs/llrt"
+
+[lib]
+name = "llrt_readline"
+path = "src/lib.rs"
+
+[dependencies]
+llrt_context = { path = "../../libs/llrt_context" }
+llrt_events = { path = "../llrt_events" }
+llrt_utils = { path = "../../libs/llrt_utils"}
+rquickjs = { version = "0.11", features = ["std"], default-features = false }
+
+[dev-dependencies]
+llrt_test = { git = "../../libs/llrt_test" }
+tokio = { version = "1", features = [
+	"macros",
+	"rt"
+], default-features = false }

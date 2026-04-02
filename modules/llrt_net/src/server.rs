@@ -43,6 +43,7 @@ pub struct Server<'js> {
     already_listen: Arc<AtomicBool>,
     sockets: ReuseList<Class<'js, Socket<'js>>>,
     should_close: Arc<AtomicBool>,
+    refed: Arc<AtomicBool>,
 }
 
 impl<'js> Trace<'js> for Server<'js> {
@@ -114,6 +115,20 @@ impl<'js> Server<'js> {
         }
 
         Ok(instance)
+    }
+
+    pub fn has_ref(&self) -> bool {
+        self.refed.load(Ordering::Relaxed)
+    }
+
+    pub fn unref(&self) -> Result<()> {
+        self.refed.store(false, Ordering::Relaxed);
+        Ok(())
+    }
+
+    pub fn r#ref(&self) -> Result<()> {
+        self.refed.store(true, Ordering::Relaxed);
+        Ok(())
     }
 
     pub fn address(&self) -> Value<'js> {
