@@ -100,6 +100,7 @@ impl<'js> Server<'js> {
                 already_listen: Arc::new(AtomicBool::new(false)),
                 sockets: ReuseList::with_capacity(8),
                 should_close: Arc::new(AtomicBool::new(false)),
+                refed: Arc::new(AtomicBool::new(false)),
             },
         )?;
 
